@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:money_app/controllers/balance_controller.dart';
+import 'package:money_app/data/dummy_data.dart';
 import 'package:money_app/res/colors.dart';
 import 'package:money_app/widgets/action_button.dart';
 import 'package:virtual_keyboard/virtual_keyboard.dart';
@@ -130,6 +134,7 @@ class _TopUpState extends State<TopUp> {
           Container(
             color: AppColors.primaryColor,
             child: VirtualKeyboard(
+                height: _height / 4,
                 textColor: AppColors.generalNumbersColor,
                 type: VirtualKeyboardType.Numeric,
                 fontSize: 25,
@@ -153,7 +158,25 @@ class _TopUpState extends State<TopUp> {
           ActionButton(
             title: "Next",
             onTap: () {
+              final String amount = _controller.text;
+              String formatedAmount = amount;
+              if (amount.contains('.'))
+                formatedAmount = amount;
+              else
+                formatedAmount = '$formatedAmount' + '.00';
+              elements.add({
+                'name': 'Top Up',
+                'icon': 'assets/icons/topup_icon.svg',
+                'amount': formatedAmount,
+                'date': DateTime.now().isToday()
+                    ? "TODAY"
+                    : DateTime.now().isYesterday()
+                        ? "YESTERDAY"
+                        : DateFormat("d MMMM").format(DateTime.now()),
+                'type': 'topUp'
+              });
               _balanceController.topUpToAccount(double.parse(_controller.text));
+              log(elements.toString());
               Get.close(1);
             },
           ),

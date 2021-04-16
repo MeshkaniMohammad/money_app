@@ -1,8 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:money_app/data/dummy_data.dart';
 import 'package:money_app/res/colors.dart';
 import 'package:money_app/screens/pay_who.dart';
 import 'package:money_app/widgets/action_button.dart';
@@ -130,6 +128,7 @@ class _PayState extends State<Pay> {
           Container(
             color: AppColors.primaryColor,
             child: VirtualKeyboard(
+                height: _height / 4,
                 textColor: AppColors.generalNumbersColor,
                 type: VirtualKeyboardType.Numeric,
                 fontSize: 25,
@@ -153,17 +152,6 @@ class _PayState extends State<Pay> {
           ActionButton(
             title: "Next",
             onTap: () {
-              elements.add({
-                'name': _controller.text,
-                'icon': 'assets/icons/payment_icon.svg',
-                'amount': _controller.text,
-                'date': DateTime.now().isToday()
-                    ? "TODAY"
-                    : DateTime.now().isYesterday()
-                        ? "YESTERDAY"
-                        : DateFormat("d MMMM").format(DateTime.now()),
-                'type': 'topUp'
-              });
               Get.to(PayWho(
                 amount: _controller.text,
               ));

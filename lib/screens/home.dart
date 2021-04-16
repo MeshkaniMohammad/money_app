@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.w600),
                       ),
                       SizedBox(
-                        height: 100,
+                        height: _height / 20,
                       ),
                       Obx(
                         () => Text(
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(
-                height: 60,
+                height: _height / 17,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20),

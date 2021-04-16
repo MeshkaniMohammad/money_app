@@ -75,7 +75,29 @@ class PayWho extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 45),
             child: TextField(
+              autofocus: true,
               controller: _controller,
+              onSubmitted: (val) {
+                String formatedAmount = amount;
+                if (amount.contains('.'))
+                  formatedAmount = amount;
+                else
+                  formatedAmount = '$formatedAmount' + '.00';
+                elements.add({
+                  'name': _controller.text,
+                  'icon': 'assets/icons/payment_icon.svg',
+                  'amount': formatedAmount,
+                  'date': DateTime.now().isToday()
+                      ? "TODAY"
+                      : DateTime.now().isYesterday()
+                          ? "YESTERDAY"
+                          : DateFormat("d MMMM").format(DateTime.now()),
+                  'type': 'pay'
+                });
+                _balanceController.payWithAccount(double.parse(amount));
+                FocusScope.of(context).unfocus();
+                Get.to(Home());
+              },
               maxLines: 1,
               style: GoogleFonts.montserrat(
                 color: AppColors.generalNumbersColor,
@@ -103,10 +125,15 @@ class PayWho extends StatelessWidget {
           ActionButton(
             title: "Pay",
             onTap: () {
+              String formatedAmount = amount;
+              if (amount.contains('.'))
+                formatedAmount = amount;
+              else
+                formatedAmount = '$formatedAmount' + '.00';
               elements.add({
                 'name': _controller.text,
                 'icon': 'assets/icons/payment_icon.svg',
-                'amount': amount,
+                'amount': formatedAmount,
                 'date': DateTime.now().isToday()
                     ? "TODAY"
                     : DateTime.now().isYesterday()
@@ -115,6 +142,7 @@ class PayWho extends StatelessWidget {
                 'type': 'pay'
               });
               _balanceController.payWithAccount(double.parse(amount));
+              FocusScope.of(context).unfocus();
               Get.to(Home());
             },
           ),
