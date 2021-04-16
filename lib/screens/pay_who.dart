@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -96,7 +98,7 @@ class PayWho extends StatelessWidget {
                 });
                 _balanceController.payWithAccount(double.parse(amount));
                 FocusScope.of(context).unfocus();
-                Get.to(Home());
+                Get.to(() => Home());
               },
               maxLines: 1,
               style: GoogleFonts.montserrat(
@@ -125,25 +127,26 @@ class PayWho extends StatelessWidget {
           ActionButton(
             title: "Pay",
             onTap: () {
-              String formatedAmount = amount;
+              String formattedAmount = amount;
               if (amount.contains('.'))
-                formatedAmount = amount;
+                formattedAmount = amount;
               else
-                formatedAmount = '$formatedAmount' + '.00';
+                formattedAmount = '$formattedAmount' + '.00';
               elements.add({
                 'name': _controller.text,
                 'icon': 'assets/icons/payment_icon.svg',
-                'amount': formatedAmount,
+                'amount': formattedAmount,
                 'date': DateTime.now().isToday()
                     ? "TODAY"
                     : DateTime.now().isYesterday()
                         ? "YESTERDAY"
-                        : DateFormat("d MMMM").format(DateTime.now()),
+                        : DateFormat("d MMMM").format(DateTime.now()).toUpperCase(),
                 'type': 'pay'
               });
               _balanceController.payWithAccount(double.parse(amount));
               FocusScope.of(context).unfocus();
-              Get.to(Home());
+              log(elements.toString());
+              Get.to(() => Home());
             },
           ),
         ],

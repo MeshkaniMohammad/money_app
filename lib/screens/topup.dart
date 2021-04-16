@@ -10,6 +10,8 @@ import 'package:money_app/res/colors.dart';
 import 'package:money_app/widgets/action_button.dart';
 import 'package:virtual_keyboard/virtual_keyboard.dart';
 
+import 'home.dart';
+
 class TopUp extends StatefulWidget {
   @override
   _TopUpState createState() => _TopUpState();
@@ -26,7 +28,6 @@ class _TopUpState extends State<TopUp> {
   @override
   Widget build(BuildContext context) {
     final BalanceController _balanceController = Get.put(BalanceController());
-
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
 
@@ -53,7 +54,7 @@ class _TopUpState extends State<TopUp> {
                   width: _width / 3,
                 ),
                 GestureDetector(
-                  onTap: () => Get.close(1),
+                  onTap: () => Get.off(() => Home()),
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 15,
@@ -158,26 +159,36 @@ class _TopUpState extends State<TopUp> {
           ActionButton(
             title: "Next",
             onTap: () {
-              final String amount = _controller.text;
-              String formatedAmount = amount;
-              if (amount.contains('.'))
-                formatedAmount = amount;
-              else
-                formatedAmount = '$formatedAmount' + '.00';
-              elements.add({
-                'name': 'Top Up',
-                'icon': 'assets/icons/topup_icon.svg',
-                'amount': formatedAmount,
-                'date': DateTime.now().isToday()
-                    ? "TODAY"
-                    : DateTime.now().isYesterday()
-                        ? "YESTERDAY"
-                        : DateFormat("d MMMM").format(DateTime.now()),
-                'type': 'topUp'
-              });
-              _balanceController.topUpToAccount(double.parse(_controller.text));
-              log(elements.toString());
-              Get.close(1);
+              log('text in controller  is : ${_controller.text}');
+
+              if (_controller.text.length > 0) {
+                final String amount = _controller.text;
+                String formatedAmount = amount;
+                if (amount.contains('.'))
+                  formatedAmount = amount;
+                else
+                  formatedAmount = '$formatedAmount' + '.00';
+                log(elements.toString());
+                log('formatted amount is : $formatedAmount');
+
+                elements.add({
+                  'name': 'Top Up',
+                  'icon': 'assets/icons/topup_icon.svg',
+                  'amount': formatedAmount,
+                  'date': DateTime.now().isToday()
+                      ? "TODAY"
+                      : DateTime.now().isYesterday()
+                          ? "YESTERDAY"
+                          : DateFormat("d MMMM").format(DateTime.now()).toUpperCase(),
+                  'type': 'topUp'
+                });
+                _balanceController.topUpToAccount(double.parse(_controller.text));
+                FocusScope.of(context).unfocus();
+                log(elements.toString());
+                log('before going home');
+                Get.off(() => Home());
+                log('after going home');
+              }
             },
           ),
         ],

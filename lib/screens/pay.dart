@@ -152,9 +152,10 @@ class _PayState extends State<Pay> {
           ActionButton(
             title: "Next",
             onTap: () {
-              Get.to(PayWho(
-                amount: _controller.text,
-              ));
+              if (_controller.text.length > 0)
+                Get.to(() => PayWho(
+                      amount: _controller.text,
+                    ));
             },
           ),
         ],

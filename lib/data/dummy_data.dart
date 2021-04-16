@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 final myDate = DateTime(2021, 4, 15);
 final myDate2 = DateTime(2021, 4, 16);
 final myDate3 = DateTime(2021, 4, 10);
-List elements = [
+final elements = [
   {
     'name': 'eBay',
     'icon': 'assets/icons/payment_icon.svg',

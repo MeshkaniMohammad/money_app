@@ -48,12 +48,23 @@ class _HomeState extends State<Home> {
                         height: _height / 20,
                       ),
                       Obx(
-                        () => Text(
-                          "£ ${_balanceController.totalBalance}",
-                          style: GoogleFonts.montserrat(
-                              color: AppColors.generalNumbersColor,
-                              fontSize: 50,
-                              fontWeight: FontWeight.w600),
+                        () => RichText(
+                          text: TextSpan(
+                            text: '£',
+                            style: GoogleFonts.montserrat(
+                                color: AppColors.generalNumbersColor,
+                                fontSize: 30,
+                                fontWeight: FontWeight.w600),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: "${_balanceController.totalBalance.toStringAsFixed(2)}",
+                                style: GoogleFonts.montserrat(
+                                    color: AppColors.generalNumbersColor,
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.w600),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
