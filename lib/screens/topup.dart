@@ -10,8 +10,6 @@ import 'package:money_app/res/colors.dart';
 import 'package:money_app/widgets/action_button.dart';
 import 'package:virtual_keyboard/virtual_keyboard.dart';
 
-import 'home.dart';
-
 class TopUp extends StatefulWidget {
   @override
   _TopUpState createState() => _TopUpState();
@@ -54,7 +52,7 @@ class _TopUpState extends State<TopUp> {
                   width: _width / 3,
                 ),
                 GestureDetector(
-                  onTap: () => Get.off(() => Home()),
+                  onTap: () => Get.back(),
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 15,
@@ -186,7 +184,7 @@ class _TopUpState extends State<TopUp> {
                 FocusScope.of(context).unfocus();
                 log(elements.toString());
                 log('before going home');
-                Get.off(() => Home());
+                Get.back();
                 log('after going home');
               }
             },
